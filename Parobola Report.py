@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt
 import tensorflow as tf
 
 #Get Data
-#TR_Data[V0,Vx,Vy,theta,hmax,R]
+#TR_Data[V0,Vx,Vy,theta,t,hmax,R]
 def Parabola(V0,theta):
     g = 9.8
     Vx = V0 * math.cos( theta / 180 * math.pi ) # Vx 水平方向速度
