@@ -1,12 +1,12 @@
-#import Library
+#導入Library
 import math
 import random
 import numpy as np
 import matplotlib.pyplot as plt
 import tensorflow as tf
 
-#Get Data
-#TR_Data[V0,Vx,Vy,theta,t,hmax,R]
+# Get Data
+# TR_Data[V0,Vx,Vy,theta,hmax,R]
 def Parabola(V0,theta):
     g = 9.8
     Vx = V0 * math.cos( theta / 180 * math.pi ) # Vx 水平方向速度
@@ -19,6 +19,11 @@ def Parabola(V0,theta):
 
 TR_Data = np.zeros((101,7))
 for i in range(0,101,1):
-    TR_Data[i,:] = Parabola(i,random.randint(0,90))
+    TR_Data[i,:] = Parabola(i,random.randint(1,89))
     
 print(TR_Data)
+# Clean, Prepare & Manipulate Data
+# Train Model
+# Test Data
+# Improve
+# 分別帶三個 Activation Function試試看 (ReLU)
