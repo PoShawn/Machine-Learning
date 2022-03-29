@@ -7,8 +7,7 @@ import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 import tensorflow as tf
-from tensorflow import keras
-from keras import layers
+import keras
 
 # Get Data
 def Parabola(V0,theta):
@@ -21,28 +20,53 @@ def Parabola(V0,theta):
     Vector = [V0,theta,H,R]
     return Vector
 
-Dataset = np.zeros((100,4))
-for i in range(0,100,1):
-    Dataset[i,:] = Parabola(i+1,random.randint(1,89))
+Dataset = np.zeros((10000,4))
+for i in range(0,10000,1):
+    Dataset[i,:] = Parabola(random.randint(1,100),random.randint(1,89))
+print(Dataset)
 # Test Data
 # Improve
 # 分別帶三個 Activation Function試試看 (ReLU)
 
 # Clean, Prepare & Manipulate Data
-X_train = Dataset[:80,:2]
-Y_train = Dataset[:80,2:]
-X_test = Dataset[80:,:2]
-Y_test = Dataset[80:,2:]
+X_train = Dataset[:8000,:2]
+Y_train = Dataset[:8000,2:]
+X_test = Dataset[8000:,:2]
+Y_test = Dataset[8000:,2:]
+print(np.shape(X_train))
+print(X_train)
 
 # Train Model
-from keras.models import Sequential
-from keras.layers import Dense, Activation
-
-model = Sequential([
-Dense(32, input_shape=(len(X_train),)),
-Activation('relu'),
-Dense(10),
-Activation('softmax'),
-])
-
+from keras.layers import Dense
+model = keras.Sequential()
+model.add(Dense(units = 10,
+                input_shape = (2,),
+                kernel_initializer = 'normal',
+                activation = 'relu'))
+model.add(Dense(units = 10,
+                kernel_initializer = 'normal',
+                activation = 'relu'))
+model.add(Dense(units = 2,
+                kernel_initializer = 'normal',
+                activation = 'softmax'))
+model.compile(optimizer = 'adam',
+              loss = 'mean_absolute_error',
+              metrics = ['accuracy'])
 model.summary()
+
+model.fit(X_train , Y_train , epochs = 500 , batch_size = 100)
+
+#
+score = model.evaluate(X_test , Y_test , batch_size = 1000)
+print('score:',score)
+
+#
+Y_predict = model.predict(X_test)
+print(Y_test)
+print(Y_predict)
+
+plt.scatter(Y_test[:,0],Y_predict[:,0])
+plt.show
+
+plt.scatter(Y_test[:,1],Y_predict[:,1])
+plt.show
