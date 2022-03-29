@@ -57,7 +57,7 @@ model.summary()
 model.fit(X_train , Y_train , epochs = 500 , batch_size = 100)
 
 #
-score = model.evaluate(X_test , Y_test , batch_size = 1000)
+score = model.evaluate(X_test , Y_test , batch_size = 100)
 print('score:',score)
 
 #
